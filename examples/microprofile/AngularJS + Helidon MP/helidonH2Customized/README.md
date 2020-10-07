@@ -1,3 +1,5 @@
+To be updated soon.
+
 # Helidon MP Database
 
 Helidon MP application that uses JPA with an in-memory H2 database
