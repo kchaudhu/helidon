@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>  
+    <title>AngularJS + Helidon SE</title>  
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+     <link href="./stylesheets/app.css" rel="stylesheet"></link>
+  </head>
+  <body ng-app="myApp" class="ng-cloak">
+      <div class="generic-container" ng-controller="CreditController as ctrl">
+          <div class="panel panel-default">
+              <div class="panel-heading"><span class="lead">Container Native Employee Record Entry Application (AngularJS UI + Helidon SE backend)</span></div>
+              <div class="formcontainer">
+                  <form ng-submit="ctrl.submit()" name="myForm" class="form-horizontal">
+                      <input type="hidden" ng-model="ctrl.user.id" />
+                      <div class="row">
+                          <div class="form-group col-md-12">
+                              <label class="col-md-2 control-lable" for="file">Id</label>
+                              <div class="col-md-7">
+                                  <input type="number" ng-model="ctrl.user.id" name="id" class="form-control input-sm" placeholder="Id" required ng-minlength="1"/>
+                                  <div class="has-error" ng-show="myForm.$dirty">
+                                      <span ng-show="myForm.id.$error.required">This is a required field</span>
+                                      <span ng-show="myForm.id.$error.minlength">Minimum length required is 1</span>
+                                      <span ng-show="myForm.id.$invalid">This field is invalid </span>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                        
+                      
+                      <div class="row">
+                          <div class="form-group col-md-12">
+                              <label class="col-md-2 control-lable" for="file">Name</label>
+                              <div class="col-md-7">
+                                  <input type="text" name="name" ng-model="ctrl.user.name" class="form-control input-sm" required placeholder="Enter Name."/>
+                                  <div class="has-error" ng-show="myForm.$dirty">
+                                      <span ng-show="myForm.name.$error.required">This is a required field</span>
+                                      <span ng-show="myForm.name.$error.minlength">Minimum length required is 3</span>
+                                      <span ng-show="myForm.name.$invalid">This field is invalid </span>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+
+                     
+                      <div class="row">
+                          <div class="form-group col-md-12">
+                              <label class="col-md-2 control-lable" for="file">Role</label>
+                              <div class="col-md-7">
+                                  <input type="text" name="role" ng-model="ctrl.user.role" class="form-control input-sm" required placeholder="Enter Role."/>
+                                  <div class="has-error" ng-show="myForm.$dirty">
+                                      <span ng-show="myForm.role.$error.required">This is a required field</span>
+                                      <span ng-show="myForm.role.$error.minlength">Minimum length required is 3</span>
+                                      <span ng-show="myForm.role.$invalid">This field is invalid </span>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>                  
+ 
+                      <div class="row">
+                          <div class="form-actions floatRight">
+                              <input type="submit"  value="Submit" class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid">
+                              <button type="button" ng-click="ctrl.reset()" class="btn btn-warning btn-sm" ng-disabled="myForm.$pristine">Reset Form</button>
+                          </div>
+                      </div>
+                  </form>
+              </div>
+              <div class="panel panel-default">
+              		<div class="panel-heading"><span class="lead"><span id="score_result" style="color:red">{{ctrl.user.response}}</span></span></div>
+          	  </div>
+          </div>
+      
+      <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  	  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
+      <script src="./js/angular_app.js"></script>
+      <script src="./js/service/customer_service.js"></script>
+      <script src="./js/controller/customer_controller.js"></script>
+  </body>
+</html>
