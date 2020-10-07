@@ -1,0 +1,8 @@
+There are 2 maven projects :-
+1. employeeentry-AngularJS :- 
+This is an AngularJS example that demonstrates how to connect to a Helidon MP backend. There is an Employe Entry form where user fills up some basic information such as id,
+name and role and submits. This in turn calls the Helidon MP backend to save the data in an H2 database.
+2. helidonH2Customized :-
+This is a maven based Helidon MP application that has various REST end points for GET, PUT, POST and DELETE of employees.
+
+There are individual README.md in each of the individual project folders for details on how to build and execute the individual projects.
