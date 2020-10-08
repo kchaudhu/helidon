@@ -1,89 +1,54 @@
-To be updated soon.
-
 # Helidon MP Database
-
 Helidon MP application that uses JPA with an in-memory H2 database
 
 ## Build and run
-
-With JDK11+
-```bash
-mvn package
+mvn clean package
 java -jar target/database-mp.jar
-```
 
-## Exercise the application
 
-```
-curl -X GET http://localhost:8081/pokemon
-[{"id":1,"idType":12,"name":"Bulbasaur"}, ...]
+## Execute the application 
+Using curl, PostMan or any other REST client. There is an AngularJS project employeeentry-AngularJS that has a UI to send POST requests
+## GET 
+http://localhost:8081/employees/
+http://localhost:8081/employees/count
+http://localhost:8081/employees/{id}
+http://localhost:8081/employees/name/{name}
+## DELETE 
+http://localhost:8081/employees/{id}
+## POST 
+Pass a JSON payload for id, name and role. There is also an AngularJS based project employeeentry-AngularJS that has a UI to send POST requests
+http://localhost:8081/employees
 
-curl -X GET http://localhost:8081/type
-[{"id":1,"name":"Normal"}, ...]
-
-curl -H "Content-Type: application/json" --request POST --data '{"id":100, "idType":1, "name":"Test"}' http://localhost:8081/pokemon
-```
 
 ## Try health and metrics
-
-```
-curl -s -X GET http://localhost:8081/health
-{"outcome":"UP",...
-. . .
+## GET
+http://localhost:8081/health
 
 # Prometheus Format
-curl -s -X GET http://localhost:8081/metrics
-# TYPE base:gc_g1_young_generation_count gauge
-. . .
+## GET
+http://localhost:8081/metrics
 
-# JSON Format
-curl -H 'Accept: application/json' -X GET http://localhost:8081/metrics
-{"base":...
-. . .
-```
+## Build a Docker Image
+docker build -t database-mp .
 
-## GraalVM Native Support
+## Run docker Image
+docker run --rm -p 8081:8081 database-mp:latest
 
-The generation of native binaries requires an installation of GraalVM 20.1.0+. For more
-information about the steps necessary to use GraalVM with Helidon
-see https://helidon.io/docs/v2/#/mp/guides/36_graalnative.
+Try the application as before.
 
-The H2 Database when configured to use the in-memory mode is currently _not compatible_
-with GraalVM native.
-In order to produce a native binary, you must run the H2 Database as a separate process
-and use a network connection for access. The simplest way to do this is by starting a Docker
-container as follows:
+## Deploy the application to Kubernetes
+## Verify connectivity to cluster
+kubectl cluster-info
+kubectl get nodes
 
-```
-docker run -d -p 1521:1521 -p 81:81 -e H2_OPTIONS='-ifNotExists' --name=h2 oscarfonts/h2
-```
+## Deploy the application to Kubernetes
+kubectl create -f app.yaml
+kubectl get pods                    # Wait for quickstart pod to be RUNNING
 
-The resulting container will listen to port 1521 for network connections.
-Switch property `javax.sql.DataSource.test.dataSource.url` in `microprofile-config.properties`
-to use a TCP connection:
+## The step above created a service that is exposed into any node port. Lookup the service to find the port.
+## Lookup the service
+kubectl get service database-mp
 
-```
-javax.sql.DataSource.test.dataSource.url=jdbc:h2:tcp://localhost:1521/test
-```
-
-Next, uncomment the following dependency in your project's pom file:
-
-```
-<dependency>
-    <groupId>io.helidon.integrations.db</groupId>
-    <artifactId>h2</artifactId>
-</dependency>
-```
-
-With all these changes, re-build your project and verify that all tests are passing.
-Finally, you can build a native binary using Maven as follows:
-
-```
-mvn -Pnative-image install -DskipTests
-```
-
-The generation of the executable binary may take several minutes to complete
-depending on your hardware and operating system --with Linux typically outperforming other
-platforms. When completed, the executable file will be available
-under the `target` directory and be named after the artifact ID you have chosen during the
-project generation phase.
+## Note the PORTs. You can now exercise the application as you did before but use the second port number (the NodePort) instead of 8081. For example:
+## GET
+http://localhost:32602/employees
