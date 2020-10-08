@@ -3,6 +3,7 @@ Helidon MP application that uses JPA with an in-memory H2 database
 
 ## Build and run
 mvn clean package
+
 java -jar target/database-mp.jar
 
 
