@@ -15,6 +15,8 @@ Enter values for Id, Name and Role and Submit.  This will send a POST request to
 
 ## Test if record inserted successfully
 ## GET request in the Helidon MP application to test whether new record was inserted successfully.
+
+For example, 
 http://localhost:8081/employees/name/Victor%20Sanchez
 
 
